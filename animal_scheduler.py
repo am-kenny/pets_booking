@@ -21,10 +21,10 @@ class Animal:
                                                                datetime.datetime.today())
 
     # check which available times meet user's requirements
-    def available_booking_times(self, preferable_times: list, booking_duration: int):
+    def available_booking_times(self, preferable_times: list, booking_duration: datetime.timedelta):
         times_list = []
         for available_time in self.available_schedule_today:
-            end_time = available_time + datetime.timedelta(minutes=booking_duration)
+            end_time = available_time + booking_duration
             if (end_time.time() <= our_close_time and
                     available_time >= preferable_times[0] and
                     end_time <= preferable_times[1]):
@@ -35,9 +35,11 @@ class Animal:
 # create animal object
 dog1 = Animal("Bobik")
 
-# user defines his/her free time
-from_time = datetime.datetime.combine(datetime.date.today(), datetime.time(12))
-to_time = datetime.datetime.combine(datetime.date.today(), datetime.time(15))
+# user defines his/her free time + desired booking duration
+from_time = datetime.datetime.combine(datetime.date.today(), datetime.time(16))
+to_time = datetime.datetime.combine(datetime.date.today(), datetime.time(20))
 time_range = [from_time, to_time]
 
-print(dog1.available_booking_times(time_range, 120))
+desired_duration = datetime.timedelta(hours=1, minutes=30)
+
+print(dog1.available_booking_times(time_range, desired_duration))
